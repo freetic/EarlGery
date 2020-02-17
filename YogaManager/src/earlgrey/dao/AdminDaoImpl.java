@@ -38,7 +38,7 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public TeacherVO selectTeacher(int empno) throws SQLException {//특정  empno로 선생님 검색
 		Connection conn = DBConnection.getConnection("config/mariadb.properties");
-		String sql = "{   call  teacher_select_sp(?)   }"; //mysql로 수정
+		String sql = "{   call  sp_teacher_select(?)   }"; //mysql로 수정
 		CallableStatement cstmt = conn.prepareCall(sql);
 		cstmt.setInt(1, empno);
 		ResultSet rs = cstmt.executeQuery();
@@ -56,7 +56,7 @@ public class AdminDaoImpl implements AdminDao {
 		//멤버형으로 매개변수를 가져옴. 이메일을 받아 이름, 핸드폰 번호를 수정함. 비밀번호 제외
 		int row = -1;
 		Connection conn = DBConnection.getConnection("config/mariadb.properties");  
-		String sql = "{ call member_update_sp(?,?,?)  }"; //name, phone, email
+		String sql = "{ call sp_member_update(?,?,?)  }"; //name, phone, email
 		CallableStatement cstmt = conn.prepareCall(sql);
 		cstmt.setString(1, member.getName());
 		cstmt.setString(2, member.getPhone());
@@ -72,7 +72,7 @@ public class AdminDaoImpl implements AdminDao {
 		//teacher만들고, teacher를 insert하는 메서드
 		int row = -1;
 		Connection conn = DBConnection.getConnection("config/mariadb.properties");  //3.
-		String sql = "{ call teacher_insert_sp(?,?,?)  }"; 
+		String sql = "{ call sp_teacher_insert(?,?,?)  }"; 
 		CallableStatement cstmt = conn.prepareCall(sql);  
 		cstmt.setInt(1, teacher.getEmpno());
 		cstmt.setString(2, teacher.getName());
@@ -86,7 +86,7 @@ public class AdminDaoImpl implements AdminDao {
 	public int deleteTeacher(TeacherVO teacher) throws SQLException {
 		int row = -1;
 		Connection conn = DBConnection.getConnection("oracle.properties");  //3.
-		String sql = "{ call teacher_delete_sp(?)  }";
+		String sql = "{ call sp_teacher_delete(?)  }";
 		CallableStatement cstmt = conn.prepareCall(sql);  //4.
 		cstmt.setInt(1, teacher.getEmpno());
 		row = cstmt.executeUpdate();
@@ -108,8 +108,8 @@ public class AdminDaoImpl implements AdminDao {
 //				member = new MemberVO(rs.getString("email"),
 //				rs.getString("name"),rs.getString("pwd"),
 //				rs.getString("phone"));
-//			
-//		}
+			
+		}
 //	@Override
 //	public int insertLecture(Lecture lecture) throws SQLException {
 //		Connection conn = DBConnection.getConnection("config/oracle.properties");  //3.
@@ -135,4 +135,4 @@ public class AdminDaoImpl implements AdminDao {
 //		return 0;
 //	}
 //
-}
+

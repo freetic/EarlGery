@@ -34,6 +34,11 @@ public class TeacherVO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("TeacherVO [empno=%s, name=%s, phone=%s]", empno, name, phone);
+	}
 	
 
 }

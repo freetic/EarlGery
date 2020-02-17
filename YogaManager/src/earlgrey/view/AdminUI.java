@@ -1,12 +1,17 @@
 package earlgrey.view;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
+import earlgrey.dao.AdminDao;
+import earlgrey.dao.AdminDaoImpl;
+import earlgrey.vo.TeacherVO;
+
 public class AdminUI {
-	public static void main(String[] args) {
-		AdminUI adu = new AdminUI();
-		adu.showMenu();
-		
+	public static void main(String[] args) throws SQLException {
+		AdminDao ad = new AdminDaoImpl();
+		TeacherVO tc = ad.selectTeacher(1);
+		System.out.println(tc);
 		
 	}
 	public int showMenu() {

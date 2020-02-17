@@ -20,6 +20,7 @@ public interface AdminDao {
 //	int updateLecture(String empno) throws SQLException;
 //	int deleteLecture(String empno) throws SQLException;
 //	
+
 	
 	
 }
