@@ -13,6 +13,12 @@ public class MemberVO {
 	this.pwd = pwd;
 	this.phone = phone;
 	}
+	public MemberVO(String email, String name, String phone) {
+
+		this.email = email;
+		this.name= name;
+		this.phone = phone;
+		}
 
 	public String getEmail() {
 		return email;

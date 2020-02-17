@@ -48,6 +48,7 @@ public class MemberMgmtUI {
 						break;
 					}
 					if(email.equals("admin@aaa.com")) {
+						AdminUI adservice = new AdminUI();
 						
 					}
 					else{ 
