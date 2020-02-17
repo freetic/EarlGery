@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="EarlGery/SalaryManagementP/src"/>
+	<classpathentry kind="src" path="EarlGery/src"/>
+	<classpathentry kind="src" path="EarlGery/YogaReservation/src"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="YogaReservation/src"/>
+	<classpathentry kind="output" path="EarlGery/SalaryManagementP/bin"/>
+</classpath>
