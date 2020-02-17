@@ -4,12 +4,12 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 
-public class MemberMgmtUI {
+public class MemberMgmtUI_LOCAL_1695 {
 	private Scanner scan;
 
 	private boolean flag;
 
-	public MemberMgmtUI() throws SQLException {
+	public MemberMgmtUI_LOCAL_1695() throws SQLException {
 		this.scan = new Scanner(System.in);
 	
 		this.flag = false;

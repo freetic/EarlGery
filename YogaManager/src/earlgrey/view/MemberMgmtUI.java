@@ -7,6 +7,7 @@ import earlgrey.service.AdminService;
 import earlgrey.service.AdminServiceImpl;
 import earlgrey.service.MemberMgmtService;
 import earlgrey.service.MemberMgmtServiceImpl;
+import earlgrey.vo.ReserveVO;
 
 
 
@@ -46,7 +47,10 @@ public class MemberMgmtUI {
 						this.flag = true;
 						break;
 					}
-					
+					if(email.equals("admin@aaa.com")) {
+						
+					}
+					else{ 
 					int choice = showMenu();
 					switch (choice) {
 					case 1:
@@ -54,20 +58,21 @@ public class MemberMgmtUI {
 						reservation.reservation();
 						break;
 					case 2:
-						Search search = new Search(email);//예약내역 보기
-						ReserveVO reserve = search.search();
+						Search search = new Search();//예약내역 보기
+						ReserveVO reserve = search.search(email);
 						search.display(reserve);
 						break;
 					case 3:
-						Search search2 = new Search();
-						ReserveVO reserve1 = search2.search();
-						search2.display(reserve1);
-						System.out.print("정말 삭제하시겠습니까(y/n) ? : ");
-						if(this.scan.next().toUpperCase().equals("Y")) {
-							if(this.service.deleteReserve(reserve1.getuserid()) == 1) {
-								System.out.println("학생이 잘 삭제됐습니다.");
-							}
-						}
+//						Search search2 = new Search();
+						//sacnnner 
+//						ReserveVO reserve1 = search2.delete(email,);
+//						search2.display(reserve1);
+//						System.out.print("정말 삭제하시겠습니까(y/n) ? : ");
+//						if(this.scan.next().toUpperCase().equals("Y")) {
+//							if(this.service.deleteReserve(reserve1.getuserid()) == 1) {
+//								System.out.println("예약이 잘 삭제되었습니다.");//email 
+//							}
+//						}
 						break;
 						
 					case 4:
@@ -76,6 +81,7 @@ public class MemberMgmtUI {
 						break;
 					}
 					
+				}
 				}
 				break;
 			case 2 :

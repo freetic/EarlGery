@@ -20,10 +20,8 @@ public class Search {
 	}
 	
 	
-	public ReserveVO search() throws SQLException {
-		System.out.print("회원의 이메일 : ");
-		String userid = this.scan.next();
-		ReserveVO reserve = this.service.read(userid);
+	public ReserveVO search(String email) throws SQLException {
+		ReserveVO reserve = this.service.read(email);
 		return reserve;
 		}
 	

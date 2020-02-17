@@ -14,7 +14,7 @@ import earlgrey.service.ReserveMgmtServiceImpl;
 import earlgrey.vo.ReserveVO;
 
 
-public class MemberMgmtUI {
+public class MemberMgmtUI_BACKUP_1695{
 	private Scanner scan;
 	private ReserveMgmtService service;
 >>>>>>> origin
