@@ -3,24 +3,29 @@ package earlgrey.view;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import earlgrey.service.AdminService;
+import earlgrey.service.AdminServiceImpl;
+import earlgrey.service.MemberMgmtService;
+import earlgrey.service.MemberMgmtServiceImpl;
+
+
 
 public class MemberMgmtUI {
 	private Scanner scan;
+	private MemberMgmtService service;
+	private AdminService service1;
 
 	private boolean flag;
 
 	public MemberMgmtUI() throws SQLException {
 		this.scan = new Scanner(System.in);
-	
+		this.service = new MemberMgmtServiceImpl();
+		this.service1 = new AdminServiceImpl();
 		this.flag = false;
 		while (!flag) {
 			this.init();
 		}
-		int choice = -1;
-		while (true) {
-			choice = this.showMenu();
-			this.process(choice);
-		}
+		
 	}
 
 	private void init() { 
@@ -28,10 +33,12 @@ public class MemberMgmtUI {
 		System.out.print("선택 >> ");
 		switch(this.scan.nextInt()) {
 			case 1 : 
-				Login login = null;
+				Scanner scan = new Scanner(System.in);
+				
 				while(true) {
-					login = new Login();
-					int number = login.login();  //-1, 0, 1
+					System.out.println("ID :"); String email = scan.next();
+					System.out.println("Password");String pwd = scan.next();
+					int number = this.service.login(email, pwd);
 					if(number == -1) System.out.println("그런 아이디는 존재하지 않습니다.");
 					else if(number == 0) System.out.println("비밀번호가 일치하지 않습니다.");
 					else if(number == 1) {
@@ -39,6 +46,36 @@ public class MemberMgmtUI {
 						this.flag = true;
 						break;
 					}
+					
+					int choice = showMenu();
+					switch (choice) {
+					case 1:
+						Reservation reservation = new Reservation();
+						reservation.reservation();
+						break;
+					case 2:
+						Search search = new Search(email);//예약내역 보기
+						ReserveVO reserve = search.search();
+						search.display(reserve);
+						break;
+					case 3:
+						Search search2 = new Search();
+						ReserveVO reserve1 = search2.search();
+						search2.display(reserve1);
+						System.out.print("정말 삭제하시겠습니까(y/n) ? : ");
+						if(this.scan.next().toUpperCase().equals("Y")) {
+							if(this.service.deleteReserve(reserve1.getuserid()) == 1) {
+								System.out.println("학생이 잘 삭제됐습니다.");
+							}
+						}
+						break;
+						
+					case 4:
+						System.out.println("이용해 주셔서 감사합니다");
+						System.exit(0);
+						break;
+					}
+					
 				}
 				break;
 			case 2 :
@@ -52,36 +89,6 @@ public class MemberMgmtUI {
 					System.exit(0);
 				}
 				break;
-		}
-	}
-
-	private void process(int choice) throws SQLException {
-		switch (choice) {
-		case 1:
-			Reservation reservation = new Reservation();
-			reservation.reservation();
-			break;
-		case 2:
-			Search search = new Search();
-			ReserveVO reserve = search.search();
-			search.display(reserve);
-			break;
-		case 3:
-			Search search2 = new Search();
-			ReserveVO reserve1 = search2.search();
-			search2.display(reserve1);
-			System.out.print("정말 삭제하시겠습니까(y/n) ? : ");
-			if(this.scan.next().toUpperCase().equals("Y")) {
-				if(this.service.deleteReserve(reserve1.getuserid()) == 1) {
-					System.out.println("학생이 잘 삭제됐습니다.");
-				}
-			}
-			break;
-			
-		case 4:
-			System.out.println("이용해 주셔서 감사합니다");
-			System.exit(0);
-			break;
 		}
 	}
 
