@@ -3,17 +3,22 @@ package earlgrey.view;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import com.example.view.Login;
+import com.example.view.Register;
+
 import earlgrey.dao.AdminDao;
 import earlgrey.dao.AdminDaoImpl;
+import earlgrey.service.AdminService;
 import earlgrey.vo.TeacherVO;
 
 public class AdminUI {
-	public static void main(String[] args) throws SQLException {
-		AdminDao ad = new AdminDaoImpl();
-		TeacherVO tc = ad.selectTeacher(1);
-		System.out.println(tc);
-		
-	}
+	private Scanner scan;
+	private AdminService service;
+	private boolean flag;
+	
+	
+	
+	
 	public int showMenu() {
 		System.out.println("1. 회원 조회하기\n" + 
 				"2. 강사 조회하기\n" + 

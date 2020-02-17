@@ -14,12 +14,14 @@ public interface AdminDao {
 	TeacherVO selectTeacher(int empno) throws SQLException;
 	int updateMember(MemberVO member) throws SQLException;
 	int insertTeacher(TeacherVO teacher) throws SQLException;
-	int deleteTeacher(TeacherVO teacher) throws SQLException;
+	ArrayList<MemberVO> searchAllMember()throws SQLException;
+	ArrayList<TeacherVO> searchAllTeacher()throws SQLException;
 //	Lecture selectLecture(int lectureid) throws SQLException;
 //	int insertLecture(Lecture lecture) throws SQLException;
 //	int updateLecture(String empno) throws SQLException;
 //	int deleteLecture(String empno) throws SQLException;
 //	
+	int deleteTeacher(int empno) throws SQLException;
 
 	
 	

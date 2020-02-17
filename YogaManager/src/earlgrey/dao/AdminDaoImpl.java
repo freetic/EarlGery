@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+
+
 
 import earlgrey.dao.DBClose;
 import earlgrey.dao.DBConnection;
@@ -83,15 +86,51 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public int deleteTeacher(TeacherVO teacher) throws SQLException {
+	public int deleteTeacher(int empno) throws SQLException {
 		int row = -1;
 		Connection conn = DBConnection.getConnection("oracle.properties");  //3.
 		String sql = "{ call sp_teacher_delete(?)  }";
 		CallableStatement cstmt = conn.prepareCall(sql);  //4.
-		cstmt.setInt(1, teacher.getEmpno());
+		cstmt.setInt(1, empno);
 		row = cstmt.executeUpdate();
 		DBClose.close(conn, cstmt);  //6.
 		return row;
+	}
+
+	@Override
+	public ArrayList<MemberVO> searchAllMember() throws SQLException {
+		Connection conn = DBConnection.getConnection("config/mariadb.properties"); 
+		String sql = "{    call sp_search_all_member()  }";
+		CallableStatement cstmt = conn.prepareCall(sql);   
+		cstmt.execute();   
+		ResultSet rs = (ResultSet)cstmt.getObject(1);
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		while(rs.next()) {
+			MemberVO member = new MemberVO(rs.getString("email"), 
+					rs.getString("name"), rs.getString("password"), rs.getString("phone"));
+			list.add(member);
+		}
+		DBClose.close(conn, cstmt, rs);   
+		return list;
+		
+	}
+
+	@Override
+	public ArrayList<TeacherVO> searchAllTeacher() throws SQLException {
+		Connection conn = DBConnection.getConnection("config/mariadb.properties"); 
+		String sql = "{    call sp_search_all_teacher()  }";
+		CallableStatement cstmt = conn.prepareCall(sql);  
+		cstmt.execute();   //매우 중요함.   5.
+		ResultSet rs = (ResultSet)cstmt.getObject(1);
+		ArrayList<TeacherVO> list = new ArrayList<TeacherVO>();
+		while(rs.next()) {
+			TeacherVO member = new TeacherVO(rs.getInt("empno"), 
+					rs.getString("name"), rs.getString("phone"));
+			list.add(member);
+		}
+		DBClose.close(conn, cstmt, rs);   //7.
+		return list;
+		
 	}
 	
 //	@Override
