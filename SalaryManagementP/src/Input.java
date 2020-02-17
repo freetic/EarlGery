@@ -5,8 +5,8 @@ public class Input {
 	private Vector<Salary> vector;
 	private Scanner scan;
 	
-	public Input(Vector<Salary> vector) {
-		this.vector = vector;
+	public Input() {
+		
 		this.scan = new Scanner(System.in);
 	}
 	
@@ -17,6 +17,6 @@ public class Input {
 		System.out.println("야간시간 : ");    int nightHour = this.scan.nextInt();
 		System.out.println("가족수 : ");       int family = this.scan.nextInt();
 		Salary sal = new Salary(sabun, name, defSalary, nightHour, family);
-		this.vector.add(sal);
+		
 	}
 }

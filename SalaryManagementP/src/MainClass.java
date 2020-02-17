@@ -1,15 +1,21 @@
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 import java.util.Vector;
 
+
+
 public class MainClass {
-	private Vector<Salary> vector;
+
 	private Scanner scan;
 	
 	public MainClass() {
-		this.vector = new Vector<Salary>(1,1);
+	
 		this.scan = new Scanner(System.in);
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		MainClass mc = new MainClass();
 		
 		while(true) {
@@ -19,7 +25,7 @@ public class MainClass {
 		}
 		System.out.println("Program is over...");
 	}
-	void process(int choice) {
+	void process(int choice) throws SQLException {
 		
 		switch(choice) {
 			case 1: input();  break;
@@ -28,27 +34,50 @@ public class MainClass {
 			case 4: output();  break;
 		}
 	}
-	void search() {
+	void search() throws SQLException {
+		Statement stmt = null;
+		ResultSet rs = null;
+		Connection conn = DBConnection.getConnection("mariadb.properties");
+		stmt = conn.createStatement();
 		System.out.print("검색할 사원번호 : ");
 		String sabun = this.scan.next();
-		boolean flag = false;
-		for(int i = 0 ; i < this.vector.size(); i++) {
-			Salary sal = this.vector.get(i);
-			if(sal.getSabun().equals(sabun)) {
-				flag = true;
-				System.out.println(sal.toString());
-			}
+		String sql = "SELECT empno, ename, gibon, yagan, gajok FROM emp WHERE empno = "+"'"+sabun+"'";
+		rs = stmt.executeQuery(sql);
+		if(rs.next()) {
+			System.out.printf("%s\t%s\t%d\t%d\t%d\t",rs.getString("empno"),rs.getString("ename"),
+							rs.getInt("gibon"),rs.getInt("yagan"),rs.getInt("gajok"));
+			System.out.println();
 		}
-		if(!flag)  System.out.println("Not Found");
+		else {System.out.println("해당 사원의 데이터가 없습니다.");}
+				
+		DBClose.close(conn, stmt, rs);
+		
 	}
 	void input() {
-		Input input = new Input(this.vector);    input.input();
-		Calc calc = new Calc(this.vector);    calc.calc();
+		Input input = new Input();    input.input();
+		Calc calc = new Calc();    calc.calc();
 	}
-	void output() {
-		Sort sort = new Sort(this.vector);     sort.sort();
-		Output output = new Output(this.vector);  output.output();
+	void output() throws SQLException {
+		Statement stmt = null;
+		ResultSet rs = null;
+		Connection conn = DBConnection.getConnection("mariadb.properties");
+		stmt = conn.createStatement();
+		String sql = "SELECT e.empno, e.ename, e.buseo, e.gibon, h.ho, g.gi, y.ya, e.chong, e.silsu  " +
+						" FROM emp e ,hogub h,  gibon g, yagan y "+
+						" WHERE e.hogub = h.pkey"
+						+ " AND e.gibon = g.pkey"
+						+ " AND e.yagan = y.pkey";
+		rs = stmt.executeQuery(sql);
+		while(rs.next()) {
+			System.out.print(rs.getString("empno")+"\t"+rs.getString("ename")+rs.getString("buseo")+
+					"\t"+rs.getInt("gibon")+"\t"+rs.getInt("ho")+"\t"+rs.getInt("gi")+"\t"+rs.getInt("ya")+"\t"+rs.getInt("chong")
+					+"\t"+rs.getInt("silsu"));
+			System.out.println();
+		}
+		
 	}
+	
+	
 	int showMenu() {
 		System.out.println("***********Menu**********");
 		System.out.println("1. 입력");

@@ -1,16 +1,20 @@
 import java.util.Vector;
 
+
+
 import kr.co.sist.libs.utils.DepartmentUtil;
 import kr.co.sist.libs.utils.SalGrade;
 
 public class Calc {
 	private Vector<Salary> vector;
 
-	public Calc(Vector<Salary> vector) {
-		this.vector = vector;
+	public Calc() {
+	
 	}
 	
 	public void calc() {
+
+
 		for(Salary sal : this.vector) {
 			//"사원번호"의 입력은 "부서명코드+호급수당코드+숫자 2자리“로 입력되며 부서명코드는
 			//<부서명코드표>를 참조하고 호급수당코드는 <호급수당코드>를 참조한다.
