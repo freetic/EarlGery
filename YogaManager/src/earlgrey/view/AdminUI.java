@@ -1,6 +1,7 @@
 package earlgrey.view;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import earlgrey.service.AdminService;
@@ -19,14 +20,28 @@ public class AdminUI {
 		int choice = showMenu();
 		switch(choice) {
 			case 1:  System.out.println("수강생의 이메일을 입력 : "); String email = scan.next();
-				this.service.readMember(email);
+				MemberVO member = this.service.readMember(email);
+				if(member == null) {
+					System.out.println("해당하는 수강생을 찾을 수 없습니다.");
+				}
 				//회원 조회하기
 			case 2: System.out.println("강사의 사번을 입력:"); int empno = scan.nextInt();
-				this.service.readTeacher(empno);
+				TeacherVO teacher = this.service.readTeacher(empno);
 				//강사 조회하기
-			case 3: this.service.readAllMember();
+				if(teacher == null) {
+					System.out.println("해당하는 강사를 찾을 수없습니다.");
+				}
+			case 3: 
+				ArrayList<MemberVO>list = this.service.readAllMember();
+				if(list.isEmpty()) {
+					System.out.println("회원 정보가 없습니다.");
+				}
 				//모든 회원 조회하기
-			case 4: this.service.readAllTeacher();
+			case 4: 
+				ArrayList<TeacherVO>list1 =this.service.readAllTeacher();
+				if(list1.isEmpty()) {
+					System.out.println("강사 정보가 없습니다.");
+				}
 				//모든 사 조회하기
 			case 5:  
 				System.out.println("<<업데이트 하고자 하는 수강생의 정보를 입력  >>");
@@ -35,8 +50,8 @@ public class AdminUI {
 			    System.out.println("<<바꿀 정보 입력>>");
 				System.out.println("이름 : ");String name = scan.next();
 				System.out.println("  비밀번호 : ");String phone = scan.next();
-				MemberVO member = new MemberVO(email1, name, phone);
-				int row = 	this.service.updateMember(member);
+				MemberVO member1= new MemberVO(email1, name, phone);
+				int row = 	this.service.updateMember(member1);
 				if(row==-1) {
 					System.out.println("해당 수강생의 업데이트에 실패하였습니다.  ");
 				}
