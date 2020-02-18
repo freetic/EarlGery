@@ -27,46 +27,46 @@ public class MemberUI {
 
 	}
 
-	public void init() throws SQLException { 
+	public void init() throws SQLException {
 		System.out.println("(1)Login       (2)Register       (3)Exit ");
 		System.out.print("선택 >> ");
-		switch(this.scan.nextInt()) {
-			case 1 : 
-				Scanner scan = new Scanner(System.in);
-				
-				while(true) {
-					System.out.println("ID :"); String email = scan.next();
-					System.out.println("Password");String pwd = scan.next();
-					int number = this.service.login(email, pwd);
-					if(number == -1) System.out.println("그런 아이디는 존재하지 않습니다.");
-					else if(number == 0) System.out.println("비밀번호가 일치하지 않습니다.");
-					else if(number == 1) {
-						System.out.println("Login Success");
-						this.flag = true;
-						if(email.equals("admin@aaa.com")) {
-							while(true) {
+		switch (this.scan.nextInt()) {
+		case 1:
+			Scanner scan = new Scanner(System.in);
+			while (true) {
+				System.out.println("ID :");
+				String email = scan.next();
+				System.out.println("Password");
+				String pwd = scan.next();
+				int number = this.service.login(email, pwd);
+				if (number == -1)
+					System.out.println("그런 아이디는 존재하지 않습니다.");
+				else if (number == 0)
+					System.out.println("비밀번호가 일치하지 않습니다.");
+				else if (number == 1) {
+					System.out.println("Login Success");
+					this.flag = true;
+					if (email.equals("admin@aaa.com")) {
+						while (true) {
 							AdminUI adservice = new AdminUI();
-							adservice.init();}
+							adservice.init();
 						}
-							break;
-					
-					
-					}
-					else{ 
-					int choice = showMenu();
-					switch (choice) {
-					case 1:
-						Reservation reservation = new Reservation();
-						reservation.reservation();
-						break;
-					case 2:
-						Search search = new Search();//예약내역 보기
-						ReserveVO reserve = search.search(email);
-						search.display(reserve);
-						break;
-					case 3:
+					} else {
+						while (true) {
+							int choice = showMenu();
+							switch (choice) {
+							case 1:
+								Reservation reservation = new Reservation();
+								reservation.reservation();
+								break;
+							case 2:
+								Search search = new Search();// 예약내역 보기
+								ReserveVO reserve = search.search(email);
+								search.display(reserve);
+								break;
+							case 3:
 //						Search search2 = new Search();
-						//sacnnner 
+								// sacnnner
 //						ReserveVO reserve1 = search2.delete(email,);
 //						search2.display(reserve1);
 //						System.out.print("정말 삭제하시겠습니까(y/n) ? : ");
@@ -75,28 +75,31 @@ public class MemberUI {
 //								System.out.println("예약이 잘 삭제되었습니다.");//email 
 //							}
 //						}
-						break;
-						
-					case 4:
-						System.out.println("이용해 주셔서 감사합니다");
-						System.exit(0);
-						break;
+								break;
+
+							case 4:
+								System.out.println("이용해 주셔서 감사합니다");
+								System.exit(0);
+								break;
+
+							}
+
+						}
 					}
-					
 				}
-				}
-				break;
-			case 2 :
-				Register register = new Register();
-				register.register();
-				break;
-			case 3 : 
-				System.out.print("정말 종료하시겠습니까(y/n) ? : ");
-				if(this.scan.next().toUpperCase().equals("Y")) {
-					System.out.println("이용해 주셔서 감사합니다");
-					System.exit(0);
-				}
-				break;
+			}
+
+		case 2:
+			Register register = new Register();
+			register.register();
+			break;
+		case 3:
+			System.out.print("정말 종료하시겠습니까(y/n) ? : ");
+			if (this.scan.next().toUpperCase().equals("Y")) {
+				System.out.println("이용해 주셔서 감사합니다");
+				System.exit(0);
+			}
+			break;
 		}
 
 	}
