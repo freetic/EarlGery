@@ -5,12 +5,20 @@ public class ReserveVO {
 	private String teachername;
 	private String date;
 	private String hour;
+	private String datehour;
+	public int recordid;
 	public ReserveVO(String userid, String teachername, String date, String hour) {
 	
 		this.userid = userid;
 		this.teachername = teachername;
 		this.date = date;
 		this.hour = hour;
+	}
+	public ReserveVO(String userid, String teachername,  String datehour) {
+		this.userid = userid;
+		this.teachername = teachername;
+		this.date = date;
+		this.datehour = datehour;
 	}
 	public String getuserid() {
 		return userid;
@@ -35,6 +43,19 @@ public class ReserveVO {
 	}
 	public void setHour(String hour) {
 		this.hour = hour;
+	}
+
+	public String getDatehour() {
+		return datehour;
+	}
+	public void setDatehour(String datehour) {
+		this.datehour = datehour;
+	}
+	public int getRecordid() {
+		return recordid;
+	}
+	public void setRecordid(int recordid) {
+		this.recordid = recordid;
 	}
 	@Override
 	public String toString() {
