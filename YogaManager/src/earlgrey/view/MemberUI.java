@@ -49,7 +49,7 @@ public class MemberUI {
 					}
 					if(email.equals("admin@aaa.com")) {
 						AdminUI adservice = new AdminUI();
-						
+						adservice.init();
 					}
 					else{ 
 					int choice = showMenu();

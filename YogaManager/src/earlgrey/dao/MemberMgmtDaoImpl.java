@@ -27,21 +27,48 @@ public class MemberMgmtDaoImpl implements MemberMgmtDao {
 	@Override
 	public int login(String userid, String passwd) throws SQLException {
 		Connection conn = DBConnection.getConnection("config/mariadb.properties"); //3.
-		String sql = "{ call sp_member_login(?, ?)  }";
+		String sql = "{ call sp_member_login_email(?)  }";
 		CallableStatement cstmt = conn.prepareCall(sql);   //4.
 		cstmt.setString(1, userid);
 		//cstmt.registerOutParameter(2, OracleTypes.CURSOR);
 		cstmt.execute();      
-		ResultSet rs = (ResultSet)cstmt.getObject(2);
-		int number = -2;
-		if(!rs.next()) {  
-			number = -1;
-		}else {  
-			String dbPwd = rs.getString("passwd").trim();
-			if(dbPwd.equals(passwd))   number = 1;
-			else number = 0;
+		ResultSet rs = (ResultSet)cstmt.getObject(1);
+		
+		int iNumber=0;
+		int number = 0;
+		if(rs.next()) {
+			if(rs.getString("email").equals(userid)) {
+				 iNumber = 1;
+			}else  iNumber = 0;
 		}
-		DBClose.close(conn, cstmt, rs);  //7.
+		sql = "{ call sp_member_login_pwd(?)  }";
+		cstmt = conn.prepareCall(sql);   //4.
+		cstmt.setString(1, passwd);
+		int pNumber = 0;
+		rs = (ResultSet)cstmt.getObject(1);
+		if(rs.next()) {
+			pNumber = 1;
+		}else pNumber =0;
+		
+		if(pNumber ==1&& iNumber ==1) {
+			number = 1;
+		}else if(iNumber == 0) {
+			number = -1;
+		}else if(pNumber == 0) {
+			number = 0;
+		}
+		//		int number = -2;
+//		if(!rs.next()) {  
+//			number = -1;
+//		}else {  
+//			String dbPwd = rs.getString("pwd").trim();
+//			if(dbPwd.equals(passwd))   number = 1;
+//			else number = 0;
+//		}
+		DBClose.close(conn, cstmt, rs);
+		
+		
+		//7.
 		return number;
 	}
 }
