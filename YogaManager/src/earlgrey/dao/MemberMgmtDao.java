@@ -8,5 +8,5 @@ public interface MemberMgmtDao {
 	int login(String userid, String passwd) throws SQLException;
 //	int insertReservation(String teachername,String date,String hour) throws SQLException;
 //	MemberVO selectReservation(String email) throws SQLException;
-//	int deleteReservation(String email) throws SQLException;
+	int deleteReservation(int recordid) throws SQLException;
 }

@@ -1,8 +1,9 @@
 package earlgrey.main;
 
+import earlgrey.view.MemberUI;
+
 import java.sql.SQLException;
 
-import earlgrey.view.MemberUI;
 
 public class MainClass {
 	public static void main(String[] args) throws SQLException {

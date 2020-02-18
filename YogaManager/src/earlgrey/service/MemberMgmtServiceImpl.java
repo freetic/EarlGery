@@ -39,5 +39,15 @@ private MemberMgmtDao dao;
 		return number;
 	}
 
+	@Override
+	public int deleteReservation(int recordid) {
+		int row = -1;
+		try {
+			row = this.dao.deleteReservation(recordid);				
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return row;
+	}
 	
 }

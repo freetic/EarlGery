@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/EarlGery.iml" filepath="$PROJECT_DIR$/EarlGery.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SalaryManagementP/SalaryManagementP.iml" filepath="$PROJECT_DIR$/SalaryManagementP/SalaryManagementP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YogaManager/YogaManager.iml" filepath="$PROJECT_DIR$/YogaManager/YogaManager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YogaReservation/YogaReservation.iml" filepath="$PROJECT_DIR$/YogaReservation/YogaReservation.iml" />
+    </modules>
+  </component>
+</project>

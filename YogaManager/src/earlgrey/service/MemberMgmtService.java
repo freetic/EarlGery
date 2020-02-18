@@ -8,6 +8,6 @@ public interface MemberMgmtService {
 	int login(String userid, String passwd);
 //	int insertReservation(int row);
 //	MemberVO read(String email);
-//	int deleteReservation(String email);
+	int deleteReservation(int recordid);
 
 }

@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-import earlgrey.service.MemberMgmtServiceImpl;
 import earlgrey.vo.MemberVO;
 
 public class MemberMgmtDaoImpl implements MemberMgmtDao {
@@ -71,6 +69,18 @@ public class MemberMgmtDaoImpl implements MemberMgmtDao {
 		
 		//7.
 		return number;
+	}
+	
+	@Override
+	public int deleteReservation(int recordid) throws SQLException {
+		Connection conn = DBConnection.getConnection("config/mariadb.properties");
+		int row = -1;
+		String sql = "{ call sp_reservation_cancel(?) }";
+		CallableStatement cstmt = conn.prepareCall(sql);
+		cstmt.setInt(1, recordid);
+		row = cstmt.executeUpdate();
+		DBClose.close(conn, cstmt);
+		return row;
 	}
 }
 	

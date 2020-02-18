@@ -1,5 +1,8 @@
 package earlgrey.view;
 
+import earlgrey.service.ReserveMgmtService;
+import earlgrey.service.ReserveMgmtServiceImpl;
+
 import java.util.Scanner;
 
 

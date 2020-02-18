@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="mariadb-java-client-2.5.4 (8)">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/YogaManager/config/mariadb-java-client-2.5.4 (8).jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
