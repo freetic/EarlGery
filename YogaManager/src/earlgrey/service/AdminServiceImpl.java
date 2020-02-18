@@ -39,7 +39,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 	@Override
 	public int updateMember(MemberVO member) throws SQLException {
-		int row = -1;
+		int row = 0;
 		try {
 			row = this.dao.updateMember(member);
 		}catch(SQLException e) {

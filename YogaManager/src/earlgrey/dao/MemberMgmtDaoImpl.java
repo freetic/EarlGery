@@ -31,24 +31,25 @@ public class MemberMgmtDaoImpl implements MemberMgmtDao {
 		CallableStatement cstmt = conn.prepareCall(sql);   //4.
 		cstmt.setString(1, userid);
 		//cstmt.registerOutParameter(2, OracleTypes.CURSOR);
-		cstmt.execute();      
-		ResultSet rs = (ResultSet)cstmt.getObject(1);
+		     
+		ResultSet rs = cstmt.executeQuery();//여기에 1 넣는거 맞아요?
 		
 		int iNumber=0;
-		int number = 0;
-		if(rs.next()) {
-			if(rs.getString("email").equals(userid)) {
+		int number = -2;
+		rs.next();
+			if(rs.getInt("success")==1) {
 				 iNumber = 1;
 			}else  iNumber = 0;
-		}
+		
 		sql = "{ call sp_member_login_pwd(?)  }";
-		cstmt = conn.prepareCall(sql);   //4.
+		cstmt = conn.prepareCall(sql);   //비밀번호 비교 추가
 		cstmt.setString(1, passwd);
-		int pNumber = 0;
-		rs = (ResultSet)cstmt.getObject(1);
-		if(rs.next()) {
-			pNumber = 1;
-		}else pNumber =0;
+		rs = cstmt.executeQuery();
+		int pNumber = 0;	
+		rs.next();
+		if(rs.getInt("success")==1) {
+			pNumber = 1;}else pNumber =0;
+		
 		
 		if(pNumber ==1&& iNumber ==1) {
 			number = 1;

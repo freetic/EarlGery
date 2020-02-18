@@ -20,14 +20,14 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public MemberVO selectMember(String email) throws SQLException {// 이메일로 멤버 검색
 		Connection conn = DBConnection.getConnection("config/mariadb.properties");
-		String sql = "{   call  member_select_sp(?)   }"; //mysql로 수정
+		String sql = "{   call  sp_member_select(?)   }"; //mysql로 수정
 		CallableStatement cstmt = conn.prepareCall(sql);
 		cstmt.setString(1, email);
 		int row = cstmt.executeUpdate();
 		ResultSet rs = cstmt.executeQuery();
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
 		MemberVO member = null;
-		while(rs.next()) {
+		while(rs.next()) { //결과 출력
 				member = new MemberVO(rs.getString("email"),
 				rs.getString("name"),rs.getString("pwd"),
 				rs.getString("phone"));
@@ -61,9 +61,10 @@ public class AdminDaoImpl implements AdminDao {
 		Connection conn = DBConnection.getConnection("config/mariadb.properties");  
 		String sql = "{ call sp_member_update(?,?,?)  }"; //name, phone, email
 		CallableStatement cstmt = conn.prepareCall(sql);
-		cstmt.setString(1, member.getName());
-		cstmt.setString(2, member.getPhone());
-		cstmt.setString(3, member.getEmail()); 
+		cstmt.setString(1, member.getEmail());
+		cstmt.setString(2, member.getName());
+		cstmt.setString(3, member.getPhone()); 
+		row = cstmt.executeUpdate();
 		DBClose.close(conn, cstmt);  
 		return row;
 	}
@@ -88,7 +89,7 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public int deleteTeacher(int empno) throws SQLException {
 		int row = -1;
-		Connection conn = DBConnection.getConnection("oracle.properties");  //3.
+		Connection conn = DBConnection.getConnection("config/mariadb.properties");  //3.
 		String sql = "{ call sp_teacher_delete(?)  }";
 		CallableStatement cstmt = conn.prepareCall(sql);  //4.
 		cstmt.setInt(1, empno);
@@ -102,12 +103,12 @@ public class AdminDaoImpl implements AdminDao {
 		Connection conn = DBConnection.getConnection("config/mariadb.properties"); 
 		String sql = "{    call sp_search_all_member()  }";
 		CallableStatement cstmt = conn.prepareCall(sql);   
-		cstmt.execute();   
-		ResultSet rs = (ResultSet)cstmt.getObject(1);
+		
+		ResultSet rs = (ResultSet)cstmt.executeQuery();
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
 		while(rs.next()) {
 			MemberVO member = new MemberVO(rs.getString("email"), 
-					rs.getString("name"), rs.getString("password"), rs.getString("phone"));
+					rs.getString("name"), rs.getString("pwd"), rs.getString("phone"));
 			list.add(member);
 		}
 		DBClose.close(conn, cstmt, rs);   
@@ -120,8 +121,7 @@ public class AdminDaoImpl implements AdminDao {
 		Connection conn = DBConnection.getConnection("config/mariadb.properties"); 
 		String sql = "{    call sp_search_all_teacher()  }";
 		CallableStatement cstmt = conn.prepareCall(sql);  
-		cstmt.execute();   //매우 중요함.   5.
-		ResultSet rs = (ResultSet)cstmt.getObject(1);
+		ResultSet rs = (ResultSet)cstmt.executeQuery();
 		ArrayList<TeacherVO> list = new ArrayList<TeacherVO>();
 		while(rs.next()) {
 			TeacherVO member = new TeacherVO(rs.getInt("empno"), 

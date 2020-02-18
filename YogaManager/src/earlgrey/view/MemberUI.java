@@ -9,8 +9,6 @@ import earlgrey.service.MemberMgmtService;
 import earlgrey.service.MemberMgmtServiceImpl;
 import earlgrey.vo.ReserveVO;
 
-
-
 public class MemberUI {
 	private Scanner scan;
 	private MemberMgmtService service;
@@ -26,7 +24,7 @@ public class MemberUI {
 		while (!flag) {
 			this.init();
 		}
-		
+
 	}
 
 	public void init() throws SQLException { 
@@ -45,11 +43,14 @@ public class MemberUI {
 					else if(number == 1) {
 						System.out.println("Login Success");
 						this.flag = true;
-						break;
-					}
-					if(email.equals("admin@aaa.com")) {
-						AdminUI adservice = new AdminUI();
-						adservice.init();
+						if(email.equals("admin@aaa.com")) {
+							while(true) {
+							AdminUI adservice = new AdminUI();
+							adservice.init();}
+						}
+							break;
+					
+					
 					}
 					else{ 
 					int choice = showMenu();
@@ -97,6 +98,7 @@ public class MemberUI {
 				}
 				break;
 		}
+
 	}
 
 	public int showMenu() {
