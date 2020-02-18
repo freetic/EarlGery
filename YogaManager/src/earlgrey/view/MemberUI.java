@@ -11,14 +11,14 @@ import earlgrey.vo.ReserveVO;
 
 
 
-public class MemberMgmtUI {
+public class MemberUI {
 	private Scanner scan;
 	private MemberMgmtService service;
 	private AdminService service1;
 
 	private boolean flag;
 
-	public MemberMgmtUI() throws SQLException {
+	public MemberUI() throws SQLException {
 		this.scan = new Scanner(System.in);
 		this.service = new MemberMgmtServiceImpl();
 		this.service1 = new AdminServiceImpl();
@@ -29,7 +29,7 @@ public class MemberMgmtUI {
 		
 	}
 
-	private void init() { 
+	public void init() throws SQLException { 
 		System.out.println("(1)Login       (2)Register       (3)Exit ");
 		System.out.print("¼±ÅÃ >> ");
 		switch(this.scan.nextInt()) {

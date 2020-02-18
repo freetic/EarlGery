@@ -63,8 +63,8 @@ public class AdminUI {
 				System.out.println("사번 입력:  "); int empno1 = scan.nextInt();
 				System.out.println("이름 입력 : "); String name1 = scan.next();
 				System.out.println("전화번호 :  "); String phone1 = scan.next();
-				TeacherVO teacher = new TeacherVO(empno1, name1, phone1);
-				row = this.service.insertTeacher(teacher);
+				TeacherVO teacher1 = new TeacherVO(empno1, name1, phone1);
+				row = this.service.insertTeacher(teacher1);
 				if(row == 1) {
 					System.out.println("강사 추가 성공  ");
 					

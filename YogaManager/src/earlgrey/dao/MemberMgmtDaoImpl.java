@@ -13,8 +13,8 @@ public class MemberMgmtDaoImpl implements MemberMgmtDao {
 	
 	@Override
 	public int register(MemberVO member) throws SQLException {
-		Connection conn = DBConnection.getConnection("config/oracle.properties"); //3
-		String sql = "{   call  member_insert_sp(?, ?,?,?)   }";
+		Connection conn = DBConnection.getConnection("config/mariadb.properties"); //3
+		String sql = "{   call  sp_member_insert(?, ?,?,?)   }";
 		CallableStatement cstmt = conn.prepareCall(sql);   //4. 
 		cstmt.setString(1, member.getEmail());
 		cstmt.setString(2, member.getPwd());
@@ -26,8 +26,8 @@ public class MemberMgmtDaoImpl implements MemberMgmtDao {
 	}
 	@Override
 	public int login(String userid, String passwd) throws SQLException {
-		Connection conn = DBConnection.getConnection("config/oracle.properties"); //3.
-		String sql = "{ call member_login_sp(?, ?)  }";
+		Connection conn = DBConnection.getConnection("config/mariadb.properties"); //3.
+		String sql = "{ call sp_member_login(?, ?)  }";
 		CallableStatement cstmt = conn.prepareCall(sql);   //4.
 		cstmt.setString(1, userid);
 		//cstmt.registerOutParameter(2, OracleTypes.CURSOR);
